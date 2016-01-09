@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+  "name": "Personal Capital Plus",
+  "short_name": "PC Plus",
+  "description": "Customize Personal Capital",
+  "version": "1.00",
+  "options_page": "options.html",
+  "content_security_policy": "object-src 'self'",
+  "content_scripts": [{
+    "matches": ["*://home.personalcapital.com/*"],
+    "js": ["main.js"]
+  }],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "web_accessible_resources": [ "options.html"],
+  "permissions": ["*://*.personalcapital.com/*", "storage", "activeTab", "webNavigation", "webRequest", "webRequestBlocking"]
+}

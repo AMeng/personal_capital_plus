@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Personal Capital Plus Options</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+  <div class="header-container">
+    <div class="header-wrapper">
+      <div class="header">
+        <h3>PERSONAL CAPITAL PLUS</h3>
+      </div>
+    </div>
+  </div>
+  <div class="main-container">
+    <div class="main-wrapper">
+      <div class="main">
+        <div id="options" class="options">
+          <div>
+            <input id="hideZeroBalances" type="checkbox" />
+            <label for="hideZeroBalances">
+              <span class="checkboxtext">Hide zero balance accounts</span>
+            </label>
+          </div>
+          <div>
+            <input id="sortBalances" type="checkbox" />
+            <label for="sortBalances">
+              <span class="checkboxtext">Sort accounts by value</span>
+            </label>
+          </div>
+          <div>
+            <input id="condenseBalances" type="checkbox" />
+            <label for="condenseBalances">
+              <span class="checkboxtext">Condense accounts (see more accounts at once)</span>
+            </label>
+          </div>
+        </div>
+        <hr />
+        <div style="clear:both;">
+          <button id="save">Save</button>
+          <h3 id="status"></h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="options.js"></script>
+
+</html>

@@ -1,0 +1,86 @@
+html {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  color: #3b3b3b;
+  font-family: Lato, sans-serif;
+  font-family: sans-serif;
+  font-size: 0.875em;
+  height: 100%;
+  line-height: 1.5;
+  min-height: 100%;
+  overflow-y: auto;
+  overflow-y: scroll;
+}
+body {
+  margin: 0;
+  min-height: 100%;
+  padding: 0;
+}
+hr {
+  box-sizing: content-box;
+  height: 0;
+}
+body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, dl, dd, ol, ul, form, fieldset, legend, figure, table, th, td, caption, hr {
+  margin: 0;
+  padding: 0;
+}
+h1 {
+  font-size: 36px;
+  font-size: 2.57143rem;
+  line-height: 1.16667;
+}
+h2 {
+  font-size: 30px;
+  font-size: 2.14286rem;
+  line-height: 1.4;
+}
+h3 {
+  font-size: 24px;
+  font-size: 1.71429rem;
+  line-height: 1.75;
+}
+div.header-container {
+  background: #3A3A3C;
+  bottom: 0;
+  color: #ffffff;
+  height: 40px;
+  left: 0;
+  right: 0;
+}
+div.header {
+  height: 40px;
+  margin: 0 auto;
+  position: relative;
+  width: 952px;
+}
+div.header-wrapper {
+  margin-left: 240px;
+}
+div.main-container {
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+div.main {
+  margin: 0 auto;
+  margin-top: 30px;
+  position: relative;
+  width: 952px;
+}
+div.main-wrapper {
+  margin-left: 240px;
+}
+input[type=checkbox] {
+  -webkit-transform: scale(2);
+  margin: 15px;
+}
+button {
+  -webkit-transform: scale(1.5);
+  margin: 20px;
+}
+span.checkboxtext {
+  display: inline;
+  font-size: 200%;
+}
