@@ -1,5 +1,6 @@
 NodeList.prototype['forEach'] = HTMLCollection.prototype['forEach'] = Array.prototype['forEach'];
 
+var OBSERVATIONS = { childList: true, subtree: true };
 var OPTIONS = {};
 chrome.storage.sync.get("options", function (obj) {
     if (obj.options) {
@@ -51,6 +52,7 @@ function setupRefreshObserver() {
 
   container = document.querySelector('div#sidebar');
   refreshObserver = new window.MutationObserver(function(mutations) {
+    refreshObserver.disconnect();
     if (OPTIONS.hideZeroBalances) {
       hideAccounts();
     }
@@ -64,14 +66,9 @@ function setupRefreshObserver() {
         element.style.padding = "5px 10px 5px 20px";
       });
     }
-
+    refreshObserver.observe(container, OBSERVATIONS);
   });
-  refreshObserver.observe(container, {
-    attributes: true,
-    attributeOldValue: true,
-    childList: false,
-    subtree: false
-  });
+  refreshObserver.observe(container, OBSERVATIONS);
 }
 
 function hideAccounts() {
@@ -96,5 +93,5 @@ function hideAccounts() {
     observer.disconnect();
     setupRefreshObserver();
   });
-  observer.observe(target, { childList: true, subtree: true });
+  observer.observe(target, OBSERVATIONS);
 })();
