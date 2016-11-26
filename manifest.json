@@ -5,7 +5,6 @@
   "description": "Customize Personal Capital",
   "version": "1.0",
   "options_page": "options.html",
-  "content_security_policy": "object-src 'self'",
   "content_scripts": [{
     "matches": ["*://home.personalcapital.com/*"],
     "js": ["main.js"]
