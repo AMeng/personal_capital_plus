@@ -7,6 +7,7 @@ function save_options() {
   OPTIONS.hideZeroBalances = document.getElementById('hideZeroBalances').checked;
   OPTIONS.sortBalances = document.getElementById('sortBalances').checked;
   OPTIONS.condenseBalances = document.getElementById('condenseBalances').checked;
+  OPTIONS.hideHelpButton = document.getElementById('hideHelpButton').checked;
 
   chrome.storage.sync.set({ 'options': OPTIONS });
   status = document.getElementById('status');
@@ -22,13 +23,15 @@ function restore_options() {
       obj.options = {
         hideZeroBalances: false,
         sortBalances: false,
-        condenseBalances: false
+        condenseBalances: false,
+        hideHelpButton: true
       };
     }
     OPTIONS = obj.options;
     document.getElementById('hideZeroBalances').checked = obj.options.hideZeroBalances;
     document.getElementById('sortBalances').checked = obj.options.sortBalances;
     document.getElementById('condenseBalances').checked = obj.options.condenseBalances;
+    document.getElementById('hideHelpButton').checked = obj.options.hideHelpButton;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);

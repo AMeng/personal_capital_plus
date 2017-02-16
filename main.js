@@ -16,7 +16,7 @@ if (!hasOptionsLink) {
   header = document.querySelector('div#userMenu ul li ul');
   header.insertAdjacentHTML(
     'beforeend',
-    "<li><a href='" + optionsUrl + "' class='pcplus-options' target='_blank'>Personal Capital Plus</a></li>"
+    "<li><a href='" + optionsUrl + "' class='pcplus-options' target='_blank'>Extension</a></li>"
   );
 }
 
@@ -56,6 +56,9 @@ function setupRefreshObserver() {
     if (OPTIONS.hideZeroBalances) {
       hideAccounts();
     }
+    if (OPTIONS.hideHelpButton) {
+      hideHelpButton();
+    }
     if (OPTIONS.sortBalances) {
       document.querySelectorAll('div.accountGroupHeader + ul').forEach(function(element) {
         sortBalances(1, element);
@@ -83,6 +86,24 @@ function hideAccounts() {
       }
     }
   });
+}
+
+function hideHelpButton() {
+  var button;
+
+  button = document.querySelector(".custom-zendesk-help-button");
+  if (button) {
+    button.remove();
+  }
+}
+
+function hideHelpButton() {
+  var button;
+
+  button = document.querySelector(".custom-zendesk-help-button");
+  if (button) {
+    button.remove();
+  }
 }
 
 (function() {
