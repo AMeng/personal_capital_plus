@@ -59,6 +59,9 @@ function setupRefreshObserver() {
     if (OPTIONS.hideHelpButton) {
       hideHelpButton();
     }
+    if (OPTIONS.widescreenMode) {
+      enabledWidescreen();
+    }
     if (OPTIONS.sortBalances) {
       document.querySelectorAll('div.accountGroupHeader + ul').forEach(function(element) {
         sortBalances(1, element);
@@ -97,13 +100,21 @@ function hideHelpButton() {
   }
 }
 
-function hideHelpButton() {
-  var button;
+function enabledWidescreen() {
+  var style;
 
-  button = document.querySelector(".custom-zendesk-help-button");
-  if (button) {
-    button.remove();
-  }
+  style = document.createElement("style");
+  style.appendChild(document.createTextNode(""));
+  document.head.appendChild(style);
+  style.sheet.insertRule("div.moduleFrame { width: auto!important; }", 0);
+  style.sheet.insertRule("div.offset { width: auto!important; }", 1);
+  style.sheet.insertRule("div.itemPreview { width: auto!important; }", 2);
+  style.sheet.insertRule("div.component { width: auto!important; }", 3);
+  style.sheet.insertRule("div.wrapper { display:flex; }", 4);
+  style.sheet.insertRule("div#content { width: 70%!important; }", 5);
+  style.sheet.insertRule("div#aside { width: 30%!important; padding-left: 25px; }", 6);
+  style.sheet.insertRule("div.panel { display: flex; align-items: center; justify-content: center;}", 7);
+  style.sheet.insertRule("table.labels { top: auto!important; left: auto!important}", 8);
 }
 
 (function() {
