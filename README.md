@@ -16,7 +16,7 @@ Usage
 After installing, a new menu option will appear under the settings dropdown called
 "Personal Capital Plus". See screenshot:
 
-![image](https://cloud.githubusercontent.com/assets/192336/12214751/1c164e7e-b65e-11e5-965e-a451bde46e8b.png)
+![image](https://cloud.githubusercontent.com/assets/192336/23011922/ddb1df38-f3e0-11e6-8c27-419d321a1935.png)
 
 Features
 --------
