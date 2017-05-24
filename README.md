@@ -27,7 +27,7 @@ Usage
 After installing, a new menu option will appear under your named settings dropdown called
 "Extension". See screenshot:
 
-![image](https://cloud.githubusercontent.com/assets/192336/23011922/ddb1df38-f3e0-11e6-8c27-419d321a1935.png)
+![image](https://cloud.githubusercontent.com/assets/192336/26382352/ebb669d8-3fe8-11e7-8b5d-f62b3d6ce1c4.png)
 
 Support
 -------
