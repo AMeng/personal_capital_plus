@@ -13,10 +13,10 @@ if (!hasOptionsLink) {
   var header, optionsUrl;
 
   optionsUrl = chrome.extension.getURL('options.html');
-  header = document.querySelector('div#userMenu ul li ul');
+  header = document.querySelector('ul.submenu--settings');
   header.insertAdjacentHTML(
     'beforeend',
-    "<li><a href='" + optionsUrl + "' class='pcplus-options' target='_blank'>Extension</a></li>"
+    "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
   );
 }
 
@@ -25,15 +25,15 @@ function sortBalances(sortOrder, sortList) {
 
   arr = [];
   parentNode = sortList || this.nextElementSibling;
-  accounts = parentNode.querySelectorAll("li.account");
+  accounts = parentNode.querySelectorAll("li.sidebar-account");
 
   accounts.forEach(function(n) {
     arr.push(n)
   });
   arr.sort(function(a, b) {
     var result, keyA, keyB;
-    var currencyA = a.querySelector("div.balance").textContent;
-    var currencyB = b.querySelector("div.balance").textContent;
+    var currencyA = a.querySelector("h4.sidebar-account__value").textContent;
+    var currencyB = b.querySelector("h4.sidebar-account__value").textContent;
     keyA = Number(currencyA.replace(/[^-0-9\.]+/g, ""));
     keyB = Number(currencyB.replace(/[^-0-9\.]+/g, ""));
     result = (keyA - keyB) * sortOrder;
@@ -50,7 +50,7 @@ function sortBalances(sortOrder, sortList) {
 function setupRefreshObserver() {
   var container, refreshObserver;
 
-  container = document.querySelector('div#sidebar');
+  container = document.querySelector('div#sidebarContent');
   refreshObserver = new window.MutationObserver(function(mutations) {
     refreshObserver.disconnect();
     if (OPTIONS.hideZeroBalances) {
@@ -63,29 +63,48 @@ function setupRefreshObserver() {
       enabledWidescreen();
     }
     if (OPTIONS.sortBalances) {
-      document.querySelectorAll('div.accountGroupHeader + ul').forEach(function(element) {
-        sortBalances(1, element);
+      document.querySelectorAll('div.sidebar-account__group-header + div ul').forEach(function(element) {
+        if (element.parentElement.parentElement.classList.contains("CREDIT_CARD")) {
+          sortBalances(-1, element);
+        } else {
+          sortBalances(1, element);
+        }
       });
     }
     if (OPTIONS.condenseBalances) {
-      document.querySelectorAll('div.accountGroupHeader + ul li.account').forEach(function(element) {
-        element.style.padding = "5px 10px 5px 20px";
-      });
+      condenseBalances();
+    }
+    if (OPTIONS.hideBackgroundGraphs) {
+      document.querySelectorAll('div.sidebar__balances-container').forEach(function(element) {
+        element.remove();
+      })
     }
     refreshObserver.observe(container, OBSERVATIONS);
   });
   refreshObserver.observe(container, OBSERVATIONS);
 }
 
+function condenseBalances() {
+  document.querySelectorAll('div.sidebar-account__header').forEach(function(element) {
+    element.style.padding = "4px 24px 4px 0px";
+  });
+  document.querySelectorAll('div.sidebar-account__group-header').forEach(function(element) {
+    element.style.padding = "6px 24px 6px 24px";
+  });
+  document.querySelectorAll('div.pc-toggle--caret-white').forEach(function(element) {
+    element.style.top = "18px";
+  });
+}
+
 function hideAccounts() {
   var accounts;
 
-  accounts = document.querySelectorAll("li.accountGroup ul li");
-  accounts.forEach(function(n) {
-    if (!n.classList.contains('error')) {
-      var bal = n.querySelector("div.balance").textContent;
-      if (bal.trim() == "0.00") {
-        n.parentElement.removeChild(n)
+  accounts = document.querySelectorAll("li.sidebar-account");
+  accounts.forEach(function(element) {
+    if (!element.classList.contains('error')) {
+      var balance = element.querySelector("h4.sidebar-account__value").textContent;
+      if (balance.trim() == "0.00") {
+        element.parentElement.removeChild(element)
       }
     }
   });

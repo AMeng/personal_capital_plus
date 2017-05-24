@@ -42,15 +42,15 @@ h3 {
   line-height: 1.75;
 }
 div.header-container {
-  background: #3A3A3C;
+  background: #305685;
   bottom: 0;
   color: #ffffff;
-  height: 40px;
+  height: 48px;
   left: 0;
   right: 0;
 }
 div.header {
-  height: 40px;
+  height: 48px;
   margin: 0 auto;
   position: relative;
   width: 952px;
@@ -83,4 +83,8 @@ button {
 span.checkboxtext {
   display: inline;
   font-size: 200%;
+}
+span.helptext {
+  display: block;
+  margin: -10px 0px 0px 50px;
 }
