@@ -8,7 +8,7 @@ function save_options() {
   OPTIONS.sortBalances = document.getElementById('sortBalances').checked;
   OPTIONS.condenseBalances = document.getElementById('condenseBalances').checked;
   OPTIONS.hideHelpButton = document.getElementById('hideHelpButton').checked;
-  OPTIONS.widescreenMode = document.getElementById('widescreenMode').checked;
+  OPTIONS.hideBackgroundGraphs = document.getElementById('hideBackgroundGraphs').checked;
 
   chrome.storage.sync.set({ 'options': OPTIONS });
   status = document.getElementById('status');
@@ -26,7 +26,7 @@ function restore_options() {
         sortBalances: true,
         condenseBalances: true,
         hideHelpButton: true,
-        widescreenMode: false
+        hideBackgroundGraphs: false
       };
     }
     OPTIONS = obj.options;
@@ -34,7 +34,7 @@ function restore_options() {
     document.getElementById('sortBalances').checked = obj.options.sortBalances;
     document.getElementById('condenseBalances').checked = obj.options.condenseBalances;
     document.getElementById('hideHelpButton').checked = obj.options.hideHelpButton;
-    document.getElementById('widescreenMode').checked = obj.options.widescreenMode;
+    document.getElementById('hideBackgroundGraphs').checked = obj.options.hideBackgroundGraphs;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
