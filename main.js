@@ -79,6 +79,18 @@ function setupRefreshObserver() {
         element.remove();
       })
     }
+    if (OPTIONS.hideNetWorth) {
+      hiddenNetWorthValue = "$***.**";
+      netWorthSpan = document.querySelector('span.sidebar__networth-amount');
+      originalValue = netWorthSpan.innerText;
+      netWorthSpan.innerText = hiddenNetWorthValue;
+      netWorthSpan.onmouseover = function () {
+        netWorthSpan.innerText = originalValue;
+      };
+      netWorthSpan.onmouseout = function () {
+        netWorthSpan.innerText = hiddenNetWorthValue;
+      };
+    }
     refreshObserver.observe(container, OBSERVATIONS);
   });
   refreshObserver.observe(container, OBSERVATIONS);

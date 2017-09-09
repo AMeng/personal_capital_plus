@@ -14,6 +14,8 @@ Show more accounts in the sidebar at once by making the display boxes smaller.
 Hide the floating help button on the bottom right of the screen.
 * **Hide header background graphs**:
 Hide the graphs behind the account type headers in the sidebar. This makes the headings easier to read.
+* **Hide net worth**:
+Hide the net worth field unless hovered on. Useful for keeping sensitive info from prying eyes. Hover over net worth to see original value.
 
 Installation
 ------------
