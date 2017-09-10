@@ -8,6 +8,9 @@ chrome.storage.sync.get("options", function (obj) {
     }
 });
 
+var netWorthHidden = false;
+var isObserving = true;
+var sidebarChangeCount = 0;
 var hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
 if (!hasOptionsLink) {
   var header, optionsUrl;
@@ -47,20 +50,18 @@ function sortBalances(sortOrder, sortList) {
   arr = null;
 }
 
-function setupRefreshObserver() {
-  var container, refreshObserver;
+function setupSidebarObserver() {
+  var container, observer;
 
   container = document.querySelector('div#sidebarContent');
-  refreshObserver = new window.MutationObserver(function(mutations) {
-    refreshObserver.disconnect();
+  observer = new window.MutationObserver(function(mutations) {
+    var observationDelay;
+
+    console.log('MutationObserver sidebar change');
+    sidebarChangeCount += 1;
+    observer.disconnect();
     if (OPTIONS.hideZeroBalances) {
       hideAccounts();
-    }
-    if (OPTIONS.hideHelpButton) {
-      hideHelpButton();
-    }
-    if (OPTIONS.widescreenMode) {
-      enabledWidescreen();
     }
     if (OPTIONS.sortBalances) {
       document.querySelectorAll('div.sidebar-account__group-header + div ul').forEach(function(element) {
@@ -80,20 +81,19 @@ function setupRefreshObserver() {
       })
     }
     if (OPTIONS.hideNetWorth) {
-      hiddenNetWorthValue = "$***.**";
-      netWorthSpan = document.querySelector('span.sidebar__networth-amount');
-      originalValue = netWorthSpan.innerText;
-      netWorthSpan.innerText = hiddenNetWorthValue;
-      netWorthSpan.onmouseover = function () {
-        netWorthSpan.innerText = originalValue;
-      };
-      netWorthSpan.onmouseout = function () {
-        netWorthSpan.innerText = hiddenNetWorthValue;
-      };
+      hideNetWorth();
     }
-    refreshObserver.observe(container, OBSERVATIONS);
+    if (sidebarChangeCount > 3) {
+      observationDelay = 500;
+    }
+    // When the page first loads, there are a few quick successive changes to the sidebar.
+    // We dona't want to miss any of these, so we let the observer fire quickly at first.
+    // After 5 observations, a delay of 500ms is added to the listener.
+    // We do this because under some conditions (such as when updating accounts manually),
+    // the observer will fire infinitley and freeze the tab.
+    setTimeout(function(){observer.observe(container, OBSERVATIONS);}, observationDelay);
   });
-  refreshObserver.observe(container, OBSERVATIONS);
+  observer.observe(container, OBSERVATIONS);
 }
 
 function condenseBalances() {
@@ -131,30 +131,40 @@ function hideHelpButton() {
   }
 }
 
-function enabledWidescreen() {
-  var style;
+function hideNetWorth() {
+  var netWorthElement, netWorthBlockerElement;
 
-  style = document.createElement("style");
-  style.appendChild(document.createTextNode(""));
-  document.head.appendChild(style);
-  style.sheet.insertRule("div.moduleFrame { width: auto!important; }", 0);
-  style.sheet.insertRule("div.offset { width: auto!important; }", 1);
-  style.sheet.insertRule("div.itemPreview { width: auto!important; }", 2);
-  style.sheet.insertRule("div.component { width: auto!important; }", 3);
-  style.sheet.insertRule("div.wrapper { display:flex; }", 4);
-  style.sheet.insertRule("div#content { width: 70%!important; }", 5);
-  style.sheet.insertRule("div#aside { width: 30%!important; padding-left: 25px; }", 6);
-  style.sheet.insertRule("div.panel { display: flex; align-items: center; justify-content: center;}", 7);
-  style.sheet.insertRule("table.labels { top: auto!important; left: auto!important}", 8);
+  if (!netWorthHidden) {
+    netWorthElement = document.querySelector('span.sidebar__networth-amount');
+    netWorthBlockerElement = netWorthElement.cloneNode()
+    netWorthBlockerElement.className = "";
+    netWorthBlockerElement.innerText = "$******"
+    netWorthElement.parentNode.insertBefore(netWorthBlockerElement, netWorthElement.nextSibling);
+    netWorthElement.style.fontSize = "40px"
+    netWorthElement.style.display = "none";
+    netWorthBlockerElement.onmouseover = function () {
+      netWorthElement.style.display = "block";
+      netWorthBlockerElement.style.display = "none";
+    };
+    netWorthElement.onmouseout = function () {
+      netWorthElement.style.display = "none";
+      netWorthBlockerElement.style.display = "block";
+    };
+    netWorthHidden = true;
+  }
 }
 
 (function() {
-  var observer, target;
+  var bodyObserver, sidebarObserver, target;
 
   target = document.getElementsByTagName('body')[0];
+  console.log('MutationObserver body change');
   observer = new window.MutationObserver(function(mutations) {
     observer.disconnect();
-    setupRefreshObserver();
+    if (OPTIONS.hideHelpButton) {
+      hideHelpButton();
+    }
+    setupSidebarObserver();
   });
   observer.observe(target, OBSERVATIONS);
 })();
