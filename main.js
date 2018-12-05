@@ -135,7 +135,7 @@ function hideNetWorth() {
   var netWorthElement, netWorthBlockerElement;
 
   if (!netWorthHidden) {
-    netWorthElement = document.querySelector('span.sidebar__networth-amount');
+    netWorthElement = document.querySelector('span.js-sidebar-networth-amount');
     netWorthBlockerElement = netWorthElement.cloneNode()
     netWorthBlockerElement.className = "";
     netWorthBlockerElement.innerText = "$******"
