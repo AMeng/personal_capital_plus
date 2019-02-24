@@ -7,11 +7,9 @@ Allows you to customize the UI with these options:
 * **Hide zero balance accounts**:
 Hides all accounts from the sidebar with a balance of exactly $0.00.
 * **Sort accounts by value**:
-Sort accounts in the sidebar desending by dollar value (credit cards are sorted ascending).
+Sort accounts in the sidebar descending by dollar value (credit cards are sorted ascending).
 * **Condense accounts list**:
 Show more accounts in the sidebar at once by making the display boxes smaller.
-* **Hide help button**:
-Hide the floating help button on the bottom right of the screen.
 * **Hide header background graphs**:
 Hide the graphs behind the account type headers in the sidebar. This makes the headings easier to read.
 * **Hide net worth**:

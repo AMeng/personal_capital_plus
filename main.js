@@ -57,17 +57,18 @@ function setupSidebarObserver() {
   observer = new window.MutationObserver(function(mutations) {
     var observationDelay;
 
-    console.log('MutationObserver sidebar change');
-    sidebarChangeCount += 1;
     observer.disconnect();
+    sidebarChangeCount += 1;
+
     if (OPTIONS.hideZeroBalances) {
       hideAccounts();
     }
     if (OPTIONS.sortBalances) {
       document.querySelectorAll('div.sidebar-account__group-header + div ul').forEach(function(element) {
-        if (element.parentElement.parentElement.classList.contains("CREDIT_CARD")) {
+        classList = element.parentElement.parentElement.classList
+        if (classList.contains("CREDIT_CARD")) {
           sortBalances(-1, element);
-        } else {
+        } else if (!classList.contains("NEEDS_ATTENTION") && !classList.contains("IN_PROGRESS")) {
           sortBalances(1, element);
         }
       });
@@ -87,7 +88,7 @@ function setupSidebarObserver() {
       observationDelay = 500;
     }
     // When the page first loads, there are a few quick successive changes to the sidebar.
-    // We dona't want to miss any of these, so we let the observer fire quickly at first.
+    // We don't want to miss any of these, so we let the observer fire quickly at first.
     // After 5 observations, a delay of 500ms is added to the listener.
     // We do this because under some conditions (such as when updating accounts manually),
     // the observer will fire infinitley and freeze the tab.
@@ -111,7 +112,7 @@ function condenseBalances() {
 function hideAccounts() {
   var accounts;
 
-  accounts = document.querySelectorAll("li.sidebar-account");
+  accounts = document.querySelectorAll("li.sidebar-account.normal");
   accounts.forEach(function(element) {
     if (!element.classList.contains('error')) {
       var balance = element.querySelector("h4.sidebar-account__value").textContent;
@@ -120,15 +121,6 @@ function hideAccounts() {
       }
     }
   });
-}
-
-function hideHelpButton() {
-  var button;
-
-  button = document.querySelector(".custom-zendesk-help-button");
-  if (button) {
-    button.remove();
-  }
 }
 
 function hideNetWorth() {
@@ -155,15 +147,11 @@ function hideNetWorth() {
 }
 
 (function() {
-  var bodyObserver, sidebarObserver, target;
+  var observer, target;
 
   target = document.getElementsByTagName('body')[0];
-  console.log('MutationObserver body change');
   observer = new window.MutationObserver(function(mutations) {
     observer.disconnect();
-    if (OPTIONS.hideHelpButton) {
-      hideHelpButton();
-    }
     setupSidebarObserver();
   });
   observer.observe(target, OBSERVATIONS);
