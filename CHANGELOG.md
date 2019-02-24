@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.2
+-----------
+
+* Removed option: Hide help button. Was not working as expected.
+* Fixed issue with sidebar text fields losing focus while typing.
+
 Version 2.1
 -----------
 
