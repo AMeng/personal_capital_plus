@@ -1,9 +1,9 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
   "description": "Customize Personal Capital",
-  "version": "2.2",
+  "version": "2.3",
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["*://home.personalcapital.com/*"],
@@ -12,6 +12,7 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": [ "options.html"],
-  "permissions": ["*://*.personalcapital.com/*", "storage", "activeTab", "webNavigation", "webRequest", "webRequestBlocking"]
+  "web_accessible_resources": ["options.html"],
+  "permissions": ["storage", "activeTab", "webNavigation", "webRequest", "webRequestBlocking"],
+  "host_permissions": ["*://*.personalcapital.com/*"]
 }
