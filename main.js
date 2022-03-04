@@ -116,7 +116,7 @@ function hideAccounts() {
   accounts.forEach(function(element) {
     if (!element.classList.contains('error')) {
       var balance = element.querySelector("h4.sidebar-account__value").textContent;
-      if (balance.trim() == "0.00") {
+      if (balance.trim().replace("$", "") == "0.00") {
         element.parentElement.removeChild(element)
       }
     }
