@@ -1,12 +1,6 @@
 Changelog
 =========
 
-Version 2.3
------------
-
-* Fixed hiding zero balance accounts.
-* Upgrade to Chrome extension manifest V3
-
 Version 2.2
 -----------
 
