@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 2.3
+-----------
+
+* Fix hidiing zero balance accounts
+
 Version 2.2
 -----------
 
