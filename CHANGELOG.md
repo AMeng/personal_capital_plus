@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Version 2.4
+-----------
+
+* Remove unused permissions
+
 Version 2.3
 -----------
 
