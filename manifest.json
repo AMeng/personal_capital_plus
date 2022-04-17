@@ -13,5 +13,5 @@
     "scripts": ["background.js"]
   },
   "web_accessible_resources": [ "options.html"],
-  "permissions": ["*://*.personalcapital.com/*", "storage", "activeTab", "webNavigation", "webRequest", "webRequestBlocking"]
+  "permissions": ["*://*.personalcapital.com/*", "storage", "activeTab", "webNavigation"]
 }
