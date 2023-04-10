@@ -77,7 +77,7 @@ function setupSidebarObserver() {
       condenseBalances();
     }
     if (OPTIONS.hideBackgroundGraphs) {
-      document.querySelectorAll('div.sidebar__balances-container').forEach(function(element) {
+      document.querySelectorAll('svg.js-acc-group-balances-chart').forEach(function(element) {
         element.remove();
       })
     }
