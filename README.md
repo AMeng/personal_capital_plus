@@ -1,8 +1,8 @@
 Personal Capital Plus
 =====================
 
-A chrome extension for [Personal Capital](https://www.personalcapital.com).
-Allows you to customize the UI with these options:
+A chrome extension for [Empower Personal Dashboard](https://home.personalcapital.com)
+(also known as Personal Capital). Allows you to customize the UI with these options:
 
 * **Hide zero balance accounts**:
 Hides all accounts from the sidebar with a balance of exactly $0.00.

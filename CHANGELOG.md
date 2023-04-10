@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.5
+-----------
+
+* Fix account sorting and graph hiding after redesign
+* Use consistent style when hiding net worth
+
 Version 2.4
 -----------
 
