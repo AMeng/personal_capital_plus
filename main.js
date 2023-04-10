@@ -64,7 +64,7 @@ function setupSidebarObserver() {
       hideAccounts();
     }
     if (OPTIONS.sortBalances) {
-      document.querySelectorAll('div.sidebar-account__group-header + div ul').forEach(function(element) {
+      document.querySelectorAll('li.sidebar-account__group > div ul').forEach(function(element) {
         classList = element.parentElement.parentElement.classList
         if (classList.contains("CREDIT_CARD")) {
           sortBalances(-1, element);
@@ -104,9 +104,6 @@ function condenseBalances() {
   document.querySelectorAll('div.sidebar-account__group-header').forEach(function(element) {
     element.style.padding = "6px 24px 6px 24px";
   });
-  document.querySelectorAll('div.pc-toggle--caret-white').forEach(function(element) {
-    element.style.top = "18px";
-  });
 }
 
 function hideAccounts() {
@@ -129,10 +126,9 @@ function hideNetWorth() {
   if (!netWorthHidden) {
     netWorthElement = document.querySelector('span.sidebar__networth-amount');
     netWorthBlockerElement = netWorthElement.cloneNode()
-    netWorthBlockerElement.className = "";
+    netWorthBlockerElement.className = "sidebar__networth-amount";
     netWorthBlockerElement.innerText = "$******"
     netWorthElement.parentNode.insertBefore(netWorthBlockerElement, netWorthElement.nextSibling);
-    netWorthElement.style.fontSize = "40px"
     netWorthElement.style.display = "none";
     netWorthBlockerElement.onmouseover = function () {
       netWorthElement.style.display = "block";
