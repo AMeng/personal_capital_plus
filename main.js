@@ -3,9 +3,9 @@ NodeList.prototype['forEach'] = HTMLCollection.prototype['forEach'] = Array.prot
 var OBSERVATIONS = { childList: true, subtree: true };
 var OPTIONS = {};
 chrome.storage.sync.get("options", function (obj) {
-    if (obj.options) {
-      OPTIONS = obj.options;
-    }
+  if (obj.options) {
+    OPTIONS = obj.options;
+  }
 });
 
 var netWorthHidden = false;
@@ -35,8 +35,8 @@ function sortBalances(sortOrder, sortList) {
   });
   arr.sort(function(a, b) {
     var result, keyA, keyB;
-    var currencyA = a.querySelector("h4.sidebar-account__value").textContent;
-    var currencyB = b.querySelector("h4.sidebar-account__value").textContent;
+    var currencyA = a.querySelector(".sidebar-account__value").textContent;
+    var currencyB = b.querySelector(".sidebar-account__value").textContent;
     keyA = Number(currencyA.replace(/[^-0-9\.]+/g, ""));
     keyB = Number(currencyB.replace(/[^-0-9\.]+/g, ""));
     result = (keyA - keyB) * sortOrder;
@@ -53,7 +53,7 @@ function sortBalances(sortOrder, sortList) {
 function setupSidebarObserver() {
   var container, observer;
 
-  container = document.querySelector('div#sidebarContent');
+  container = document.querySelector('.sidebar__body')
   observer = new window.MutationObserver(function(mutations) {
     var observationDelay;
 
@@ -64,7 +64,7 @@ function setupSidebarObserver() {
       hideAccounts();
     }
     if (OPTIONS.sortBalances) {
-      document.querySelectorAll('li.sidebar-account__group > div ul').forEach(function(element) {
+      document.querySelectorAll('.sidebar-account__group > div ul').forEach(function(element) {
         classList = element.parentElement.parentElement.classList
         if (classList.contains("CREDIT_CARD")) {
           sortBalances(-1, element);
@@ -98,10 +98,10 @@ function setupSidebarObserver() {
 }
 
 function condenseBalances() {
-  document.querySelectorAll('div.sidebar-account__header').forEach(function(element) {
+  document.querySelectorAll('.sidebar-account__header').forEach(function(element) {
     element.style.padding = "4px 24px 4px 0px";
   });
-  document.querySelectorAll('div.sidebar-account__group-header').forEach(function(element) {
+  document.querySelectorAll('.sidebar-account__group-header').forEach(function(element) {
     element.style.padding = "6px 24px 6px 24px";
   });
 }
@@ -109,10 +109,10 @@ function condenseBalances() {
 function hideAccounts() {
   var accounts;
 
-  accounts = document.querySelectorAll("li.sidebar-account.normal");
+  accounts = document.querySelectorAll(".sidebar-account.normal");
   accounts.forEach(function(element) {
     if (!element.classList.contains('error')) {
-      var balance = element.querySelector("h4.sidebar-account__value").textContent;
+      var balance = element.querySelector(".sidebar-account__value").textContent;
       if (balance.trim().replace("$", "") == "0.00") {
         element.parentElement.removeChild(element)
       }
@@ -124,7 +124,7 @@ function hideNetWorth() {
   var netWorthElement, netWorthBlockerElement;
 
   if (!netWorthHidden) {
-    netWorthElement = document.querySelector('span.sidebar__networth-amount');
+    netWorthElement = document.querySelector('.sidebar__networth-amount');
     netWorthBlockerElement = netWorthElement.cloneNode()
     netWorthBlockerElement.className = "sidebar__networth-amount";
     netWorthBlockerElement.innerText = "$******"
