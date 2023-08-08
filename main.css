@@ -39,18 +39,18 @@ h2 {
 h3 {
   font-size: 24px;
   font-size: 1.71429rem;
-  line-height: 1.75;
+  line-height: 2.5;
 }
 div.header-container {
-  background: #305685;
+  background: #002157;
   bottom: 0;
   color: #ffffff;
-  height: 48px;
+  height: 60px;
   left: 0;
   right: 0;
 }
 div.header {
-  height: 48px;
+  height: 60px;
   margin: 0 auto;
   position: relative;
   width: 952px;
