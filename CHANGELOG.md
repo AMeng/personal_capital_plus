@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 2.6
+-----------
+
+* Fix features broken from style changes
+* Use consistent style on options page
+
 Version 2.5
 -----------
 
