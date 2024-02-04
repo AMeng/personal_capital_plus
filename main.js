@@ -55,7 +55,7 @@ function setupSidebarObserver() {
 
   container = document.querySelector('.sidebar__body')
   observer = new window.MutationObserver(function(mutations) {
-    var observationDelay;
+    var observationDelay, dateString;
 
     observer.disconnect();
     sidebarChangeCount += 1;
@@ -83,6 +83,12 @@ function setupSidebarObserver() {
     }
     if (OPTIONS.hideNetWorth) {
       hideNetWorth();
+    }
+    if (OPTIONS.replaceManualEntryText) {
+      dateString = new Date().toLocaleDateString('en-us'); // m/d/yyyy. Personal Capital is a U.S. only product.
+      document.querySelectorAll(".sidebar-account.normal div.manual-entry__text").forEach(function(element) {
+        element.innerHTML = dateString;
+      })
     }
     if (sidebarChangeCount > 3) {
       observationDelay = 500;

@@ -9,6 +9,7 @@ function save_options() {
   OPTIONS.condenseBalances = document.getElementById('condenseBalances').checked;
   OPTIONS.hideBackgroundGraphs = document.getElementById('hideBackgroundGraphs').checked;
   OPTIONS.hideNetWorth = document.getElementById('hideNetWorth').checked;
+  OPTIONS.replaceManualEntryText = document.getElementById('replaceManualEntryText').checked;
 
   chrome.storage.sync.set({ 'options': OPTIONS });
   status = document.getElementById('status');
@@ -26,7 +27,8 @@ function restore_options() {
         sortBalances: true,
         condenseBalances: true,
         hideBackgroundGraphs: false,
-        hideNetWorth: false
+        hideNetWorth: false,
+        replaceManualEntryText: false
       };
     }
     OPTIONS = obj.options;
@@ -35,6 +37,7 @@ function restore_options() {
     document.getElementById('condenseBalances').checked = obj.options.condenseBalances;
     document.getElementById('hideBackgroundGraphs').checked = obj.options.hideBackgroundGraphs;
     document.getElementById('hideNetWorth').checked = obj.options.hideNetWorth;
+    document.getElementById('replaceManualEntryText').checked = obj.options.replaceManualEntryText;
   });
 }
 document.addEventListener('DOMContentLoaded', restore_options);
