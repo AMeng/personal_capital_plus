@@ -3,7 +3,7 @@
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
   "description": "Customize Personal Capital",
-  "version": "2.6",
+  "version": "2.7",
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["*://home.personalcapital.com/*"],
@@ -12,6 +12,6 @@
   "background": {
     "scripts": ["background.js"]
   },
-  "web_accessible_resources": [ "options.html"],
+  "web_accessible_resources": ["options.html"],
   "permissions": ["*://*.personalcapital.com/*", "storage", "activeTab", "webNavigation"]
 }
