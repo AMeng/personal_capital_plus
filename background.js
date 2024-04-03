@@ -1,3 +1,6 @@
 chrome.webNavigation.onHistoryStateUpdated.addListener(function (details) {
-	chrome.tabs.executeScript(null, { file: "main.js" });
+  chrome.scripting.executeScript({
+    target: {tabId: details.tabId},
+    files: ["main.js"]
+  });
 });
