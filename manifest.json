@@ -9,9 +9,6 @@
     "matches": ["*://home.personalcapital.com/*"],
     "js": ["main.js"]
   }],
-  "background": {
-    "service_worker": "background.js"
-  },
   "web_accessible_resources": [{
     "resources": ["options.html"],
     "matches": ["*://*.personalcapital.com/*"]
