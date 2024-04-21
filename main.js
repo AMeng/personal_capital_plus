@@ -1,30 +1,30 @@
-NodeList.prototype['forEach'] = HTMLCollection.prototype['forEach'] = Array.prototype['forEach'];
-
-var OBSERVATIONS = { childList: true, subtree: true };
-var OPTIONS = {};
+let OBSERVATIONS = { childList: true, subtree: true };
+let OPTIONS = {};
 chrome.storage.sync.get("options", function (obj) {
   if (obj.options) {
     OPTIONS = obj.options;
   }
 });
 
-var netWorthHidden = false;
-var isObserving = true;
-var sidebarChangeCount = 0;
-var hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
+let netWorthHidden = false;
+let isObserving = true;
+let sidebarChangeCount = 0;
+let hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
 if (!hasOptionsLink) {
-  var header, optionsUrl;
+  let header, optionsUrl;
 
-  optionsUrl = chrome.extension.getURL('options.html');
+  optionsUrl = chrome.runtime.getURL('options.html');
   header = document.querySelector('ul.submenu--settings');
-  header.insertAdjacentHTML(
-    'beforeend',
-    "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
-  );
+  if (header !== null) {
+    header.insertAdjacentHTML(
+      'beforeend',
+      "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
+    );
+  }
 }
 
 function sortBalances(sortOrder, sortList) {
-  var arr, accounts, parentNode, i;
+  let arr, accounts, parentNode, i;
 
   arr = [];
   parentNode = sortList || this.nextElementSibling;
@@ -34,9 +34,9 @@ function sortBalances(sortOrder, sortList) {
     arr.push(n)
   });
   arr.sort(function(a, b) {
-    var result, keyA, keyB;
-    var currencyA = a.querySelector(".sidebar-account__value").textContent;
-    var currencyB = b.querySelector(".sidebar-account__value").textContent;
+    let result, keyA, keyB;
+    let currencyA = a.querySelector(".sidebar-account__value").textContent;
+    let currencyB = b.querySelector(".sidebar-account__value").textContent;
     keyA = Number(currencyA.replace(/[^-0-9\.]+/g, ""));
     keyB = Number(currencyB.replace(/[^-0-9\.]+/g, ""));
     result = (keyA - keyB) * sortOrder;
@@ -51,11 +51,11 @@ function sortBalances(sortOrder, sortList) {
 }
 
 function setupSidebarObserver() {
-  var container, observer;
+  let container, observer;
 
   container = document.querySelector('.sidebar__body')
   observer = new window.MutationObserver(function(mutations) {
-    var observationDelay, dateString;
+    let observationDelay, dateString;
 
     observer.disconnect();
     sidebarChangeCount += 1;
@@ -113,12 +113,12 @@ function condenseBalances() {
 }
 
 function hideAccounts() {
-  var accounts;
+  let accounts;
 
   accounts = document.querySelectorAll(".sidebar-account.normal");
   accounts.forEach(function(element) {
     if (!element.classList.contains('error')) {
-      var balance = element.querySelector(".sidebar-account__value").textContent;
+      let balance = element.querySelector(".sidebar-account__value").textContent;
       if (balance.trim().replace("$", "") == "0.00") {
         element.parentElement.removeChild(element)
       }
@@ -127,7 +127,7 @@ function hideAccounts() {
 }
 
 function hideNetWorth() {
-  var netWorthElement, netWorthBlockerElement;
+  let netWorthElement, netWorthBlockerElement;
 
   if (!netWorthHidden) {
     netWorthElement = document.querySelector('.sidebar__networth-amount');
@@ -148,8 +148,8 @@ function hideNetWorth() {
   }
 }
 
-(function() {
-  var observer, target;
+window.addEventListener('load', function() {
+  let observer, target;
 
   target = document.getElementsByTagName('body')[0];
   observer = new window.MutationObserver(function(mutations) {
@@ -157,4 +157,4 @@ function hideNetWorth() {
     setupSidebarObserver();
   });
   observer.observe(target, OBSERVATIONS);
-})();
+});

@@ -1,8 +1,8 @@
 NodeList.prototype['forEach'] = HTMLCollection.prototype['forEach'] = Array.prototype['forEach'];
-var OPTIONS = {};
+let OPTIONS = {};
 
 function save_options() {
-  var status;
+  let status;
 
   OPTIONS.hideZeroBalances = document.getElementById('hideZeroBalances').checked;
   OPTIONS.sortBalances = document.getElementById('sortBalances').checked;
