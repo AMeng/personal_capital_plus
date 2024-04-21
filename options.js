@@ -1,4 +1,3 @@
-NodeList.prototype['forEach'] = HTMLCollection.prototype['forEach'] = Array.prototype['forEach'];
 let OPTIONS = {};
 
 function save_options() {
