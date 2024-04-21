@@ -2,15 +2,12 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
   color: #3b3b3b;
-  font-family: Lato, sans-serif;
   font-family: sans-serif;
   font-size: 0.875em;
   height: 100%;
   line-height: 1.5;
   min-height: 100%;
-  overflow-y: auto;
   overflow-y: scroll;
 }
 body {
@@ -73,11 +70,11 @@ div.main-wrapper {
   margin-left: 240px;
 }
 input[type=checkbox] {
-  -webkit-transform: scale(2);
+  transform: scale(2);
   margin: 15px;
 }
 button {
-  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
   margin: 20px;
 }
 span.checkboxtext {
