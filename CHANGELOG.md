@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 3.0
+
+* Migrate to Manifest V3
+
 ### Version 2.7
 
 * New option: Replace manual entry text
