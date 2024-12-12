@@ -14,5 +14,11 @@
     "matches": ["*://*.personalcapital.com/*"]
   }],
   "permissions": ["storage", "activeTab", "webNavigation"],
-  "host_permissions": ["*://*.personalcapital.com/*"]
+  "host_permissions": ["*://*.personalcapital.com/*"],
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@personal-capital-plus"
+    }
+  }
 }
