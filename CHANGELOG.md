@@ -1,5 +1,9 @@
 # Changelog
 
+### Version 3.1
+
+* Add support for Firefox
+
 ### Version 3.0
 
 * Migrate to Manifest V3

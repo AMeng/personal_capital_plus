@@ -1,6 +1,6 @@
 # Personal Capital Plus
 
-A chrome extension for [Empower Personal Dashboard](https://home.personalcapital.com)
+A browser extension for [Empower Personal Dashboard](https://home.personalcapital.com)
 (also known as Personal Capital). Allows you to customize the UI with these options:
 
 | Option                        | Description |
@@ -14,8 +14,9 @@ A chrome extension for [Empower Personal Dashboard](https://home.personalcapital
 
 ## Installation
 
-Install from the
-[Chrome Web Store](https://chrome.google.com/webstore/detail/personal-capital-plus/bkaagconbehchjkhgkojhabaklbpfcfa).
+Install from the official extension source for your browser:
+* [Chrome Web Store](https://chrome.google.com/webstore/detail/personal-capital-plus/bkaagconbehchjkhgkojhabaklbpfcfa).
+* [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/personal-capital-plus)
 
 ## Usage
 
