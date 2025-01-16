@@ -3,7 +3,7 @@
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
   "description": "Customize Personal Capital",
-  "version": "3.0",
+  "version": "3.1",
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["*://home.personalcapital.com/*"],
@@ -15,7 +15,6 @@
   }],
   "permissions": ["storage", "activeTab", "webNavigation"],
   "host_permissions": ["*://*.personalcapital.com/*"],
-
   "browser_specific_settings": {
     "gecko": {
       "id": "@personal-capital-plus"
