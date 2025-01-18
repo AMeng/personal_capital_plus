@@ -15,7 +15,7 @@ A browser extension for [Empower Personal Dashboard](https://home.personalcapita
 ## Installation
 
 Install from the official extension source for your browser:
-* [Chrome Web Store](https://chrome.google.com/webstore/detail/personal-capital-plus/bkaagconbehchjkhgkojhabaklbpfcfa).
+* [Chrome Web Store](https://chrome.google.com/webstore/detail/personal-capital-plus/bkaagconbehchjkhgkojhabaklbpfcfa)
 * [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/personal-capital-plus)
 
 ## Usage
