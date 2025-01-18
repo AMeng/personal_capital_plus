@@ -9,17 +9,20 @@ chrome.storage.sync.get("options", function (obj) {
 let netWorthHidden = false;
 let isObserving = true;
 let sidebarChangeCount = 0;
-let hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
-if (!hasOptionsLink) {
-  let header, optionsUrl;
 
-  optionsUrl = chrome.runtime.getURL('options.html');
-  header = document.querySelector('ul.submenu--settings');
-  if (header !== null) {
-    header.insertAdjacentHTML(
-      'beforeend',
-      "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
-    );
+function addOptionsLink() {
+  let hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
+  if (!hasOptionsLink) {
+    let header, optionsUrl;
+
+    optionsUrl = chrome.runtime.getURL('options.html');
+    header = document.querySelector('ul.submenu--settings');
+    if (header !== null) {
+      header.insertAdjacentHTML(
+        'beforeend',
+        "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
+      );
+    }
   }
 }
 
@@ -157,4 +160,6 @@ window.addEventListener('load', function() {
     setupSidebarObserver();
   });
   observer.observe(target, OBSERVATIONS);
+
+  addOptionsLink();
 });
