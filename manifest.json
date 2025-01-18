@@ -3,7 +3,7 @@
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
   "description": "Customize Personal Capital",
-  "version": "3.1",
+  "version": "3.2",
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["*://home.personalcapital.com/*"],
