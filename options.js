@@ -6,9 +6,8 @@ function save_options() {
   OPTIONS.hideZeroBalances = document.getElementById('hideZeroBalances').checked;
   OPTIONS.sortBalances = document.getElementById('sortBalances').checked;
   OPTIONS.condenseBalances = document.getElementById('condenseBalances').checked;
-  OPTIONS.hideBackgroundGraphs = document.getElementById('hideBackgroundGraphs').checked;
+  OPTIONS.hideAccountChanges = document.getElementById('hideAccountChanges').checked;
   OPTIONS.hideNetWorth = document.getElementById('hideNetWorth').checked;
-  OPTIONS.replaceManualEntryText = document.getElementById('replaceManualEntryText').checked;
 
   chrome.storage.sync.set({ 'options': OPTIONS });
   status = document.getElementById('status');
@@ -25,19 +24,24 @@ function restore_options() {
         hideZeroBalances: false,
         sortBalances: true,
         condenseBalances: true,
-        hideBackgroundGraphs: false,
-        hideNetWorth: false,
-        replaceManualEntryText: false
+        hideAccountChanges: false,
+        hideNetWorth: false
       };
     }
     OPTIONS = obj.options;
     document.getElementById('hideZeroBalances').checked = obj.options.hideZeroBalances;
     document.getElementById('sortBalances').checked = obj.options.sortBalances;
     document.getElementById('condenseBalances').checked = obj.options.condenseBalances;
-    document.getElementById('hideBackgroundGraphs').checked = obj.options.hideBackgroundGraphs;
+    document.getElementById('hideAccountChanges').checked = obj.options.hideAccountChanges;
     document.getElementById('hideNetWorth').checked = obj.options.hideNetWorth;
-    document.getElementById('replaceManualEntryText').checked = obj.options.replaceManualEntryText;
   });
 }
+
+function save_and_close() {
+  save_options();
+  window.close();
+}
+
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
+document.querySelector('#save_and_close').addEventListener('click', save_and_close);

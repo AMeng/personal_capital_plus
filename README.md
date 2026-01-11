@@ -1,16 +1,15 @@
 # Personal Capital Plus
 
 A browser extension for [Empower Personal Dashboard](https://home.personalcapital.com)
-(also known as Personal Capital). Allows you to customize the UI with these options:
+(formerly known as Personal Capital). Allows you to customize the UI with these options:
 
 | Option                        | Description |
 | ----------------------------- | ----------- |
 | Hide zero balance accounts    | Hides all accounts from the sidebar with a balance of exactly $0.00. |
 | Sort accounts by value        | Sort accounts in the sidebar descending by dollar value (credit cards are sorted ascending). |
 | Condense accounts list        | Show more accounts in the sidebar at once by making the display boxes smaller. |
-| Hide header background graphs | Hide the graphs behind the account type headers in the sidebar. This makes the headings easier to read. |
-| Hide net worth                | Hide the net worth field unless hovered on. Useful for keeping sensitive info from prying eyes. Hover over net worth to see original value. |
-| Replace manual entry text     | Replace the "Manual Entry" text with the current date for each manual account in the sidebar. This makes the last updated account times easier to read. |
+| Hide account changes          | Hide the account value changes in the sidebar and the up and down arrows. |
+| Hide net worth                | Hide the net worth field unless hovered on. Hover over net worth to see original value. |
 
 ## Installation
 
