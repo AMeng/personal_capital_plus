@@ -1,165 +1,227 @@
 let OBSERVATIONS = { childList: true, subtree: true };
 let OPTIONS = {};
+let LOAD_TIMEOUT_MS = 5000;
+let OPTIONS_URL = chrome.runtime.getURL('options.html');
 chrome.storage.sync.get("options", function (obj) {
   if (obj.options) {
     OPTIONS = obj.options;
   }
 });
 
-let netWorthHidden = false;
-let isObserving = true;
-let sidebarChangeCount = 0;
+// Get all the sections in the sidebar.
+function getAccountSections(sidebarElement) {
+  return sidebarElement.querySelectorAll('.transition-\\[height\\].ease-in-out');
+}
 
-function addOptionsLink() {
-  let hasOptionsLink = document.querySelectorAll('a.pcplus-options').length > 0;
-  if (!hasOptionsLink) {
-    let header, optionsUrl;
+// Get all the sections in the sidebar.
+function getAccountSectionHeaders(sidebarElement) {
+  
+}
 
-    optionsUrl = chrome.runtime.getURL('options.html');
-    header = document.querySelector('ul.submenu--settings');
-    if (header !== null) {
-      header.insertAdjacentHTML(
-        'beforeend',
-        "<li class='menu__item'><a href='" + optionsUrl + "' class='menu__action pcplus-options' target='_blank'>Extension</a></li>"
-      );
-    }
+// Get all the accounts in a section of the sidebar
+function getAccounts(sectionElement) {
+  return sectionElement.querySelectorAll(':scope > div');
+}
+
+function getAccountValue(accountElement) {
+  const valueText = accountElement.querySelector(".sr-only").textContent;
+  return Number(valueText.replace(/[^-0-9\.]+/g, ""));
+}
+
+// Hide an element. Permanent unless temporary is specified.
+function hideElement(element, { temporary = false } = {}) {
+  if (element) {
+    element.style.setProperty('display', 'none', temporary ? '' : 'important');
   }
 }
 
-function sortBalances(sortOrder, sortList) {
-  let arr, accounts, parentNode, i;
-
-  arr = [];
-  parentNode = sortList || this.nextElementSibling;
-  accounts = parentNode.querySelectorAll("li.sidebar-account");
-
-  accounts.forEach(function(n) {
-    arr.push(n)
-  });
-  arr.sort(function(a, b) {
-    let result, keyA, keyB;
-    let currencyA = a.querySelector(".sidebar-account__value").textContent;
-    let currencyB = b.querySelector(".sidebar-account__value").textContent;
-    keyA = Number(currencyA.replace(/[^-0-9\.]+/g, ""));
-    keyB = Number(currencyB.replace(/[^-0-9\.]+/g, ""));
-    result = (keyA - keyB) * sortOrder;
-    return result;
-  });
-
-  i = 0;
-  while (arr.length) {
-    parentNode.insertBefore(arr.pop(), parentNode.childNodes[i++]);
+// Show a hidden element.
+function showElement(element) {
+  if (element) {
+    element.style.setProperty('display', 'block');
   }
-  arr = null;
 }
 
-function setupSidebarObserver() {
-  let container, observer;
+function addOptionsLink(menuElement) {
+  const ul = menuElement.querySelector('ul');
+  if (!ul) return;
+  if (ul.querySelector(`a[href="${OPTIONS_URL}"]`)) return;
 
-  container = document.querySelector('.sidebar__body')
-  observer = new window.MutationObserver(function(mutations) {
-    let observationDelay, dateString;
+  const optionsLi = ul.querySelector('li').cloneNode(true);
+  const optionsA = optionsLi.querySelector('div a')
+  optionsA.href = OPTIONS_URL;
+  optionsA['aria-label'] = 'Extension';
+  optionsA.textContent = 'Extension';
+  optionsA.target = '_blank';
 
-    observer.disconnect();
-    sidebarChangeCount += 1;
-
-    if (OPTIONS.hideZeroBalances) {
-      hideAccounts();
-    }
-    if (OPTIONS.sortBalances) {
-      document.querySelectorAll('.sidebar-account__group > div ul').forEach(function(element) {
-        classList = element.parentElement.parentElement.classList
-        if (classList.contains("CREDIT_CARD")) {
-          sortBalances(-1, element);
-        } else if (!classList.contains("NEEDS_ATTENTION") && !classList.contains("IN_PROGRESS")) {
-          sortBalances(1, element);
-        }
-      });
-    }
-    if (OPTIONS.condenseBalances) {
-      condenseBalances();
-    }
-    if (OPTIONS.hideBackgroundGraphs) {
-      document.querySelectorAll('svg.js-acc-group-balances-chart').forEach(function(element) {
-        element.remove();
-      })
-    }
-    if (OPTIONS.hideNetWorth) {
-      hideNetWorth();
-    }
-    if (OPTIONS.replaceManualEntryText) {
-      dateString = new Date().toLocaleDateString('en-us'); // m/d/yyyy. Personal Capital is a U.S. only product.
-      document.querySelectorAll(".sidebar-account.normal div.manual-entry__text").forEach(function(element) {
-        element.innerHTML = dateString;
-      })
-    }
-    if (sidebarChangeCount > 3) {
-      observationDelay = 500;
-    }
-    // When the page first loads, there are a few quick successive changes to the sidebar.
-    // We don't want to miss any of these, so we let the observer fire quickly at first.
-    // After 5 observations, a delay of 500ms is added to the listener.
-    // We do this because under some conditions (such as when updating accounts manually),
-    // the observer will fire infinitley and freeze the tab.
-    setTimeout(function(){observer.observe(container, OBSERVATIONS);}, observationDelay);
-  });
-  observer.observe(container, OBSERVATIONS);
+  ul.appendChild(optionsLi);
 }
 
-function condenseBalances() {
-  document.querySelectorAll('.sidebar-account__header').forEach(function(element) {
-    element.style.padding = "4px 24px 4px 0px";
-  });
-  document.querySelectorAll('.sidebar-account__group-header').forEach(function(element) {
-    element.style.padding = "6px 24px 6px 24px";
+function sortBalances(sidebarElement) {
+  getAccountSections(sidebarElement).forEach(function(sectionElement) {
+    let accounts = Array.from(getAccounts(sectionElement));
+
+    let accountData = accounts.map(accountElement => {
+      const value = getAccountValue(accountElement);
+      return { accountElement, value };
+    });
+
+    let sorted = accountData.every((item, idx, arr) => {
+      return idx === 0 || arr[idx-1].value >= item.value;
+    });
+    if (sorted) return;
+
+    accountData.sort((a, b) => b.value - a.value);
+    accountData.forEach(({ accountElement }) => sectionElement.appendChild(accountElement));
   });
 }
 
-function hideAccounts() {
-  let accounts;
+function condenseBalances(sidebarElement) {
+  const OLD_HEIGHT = 68;
+  const NEW_HEIGHT = 56;
+  const SECTION_HEIGHT = 38;
 
-  accounts = document.querySelectorAll(".sidebar-account.normal");
-  accounts.forEach(function(element) {
-    if (!element.classList.contains('error')) {
-      let balance = element.querySelector(".sidebar-account__value").textContent;
-      if (balance.trim().replace("$", "") == "0.00") {
-        element.parentElement.removeChild(element)
+  getAccountSections(sidebarElement).forEach(function(sectionElement) {
+    if (sectionElement.style.height !== '0px') {
+      let accounts = Array.from(getAccounts(sectionElement)).filter(div => getComputedStyle(div).display !== 'none');
+      let height = accounts.length * NEW_HEIGHT;
+      sectionElement.style.height = `${height}px`;
+    }
+  });
+
+  sidebarElement.querySelectorAll(`span.h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
+    element.classList.replace(`h-[${OLD_HEIGHT}px]`,`h-[${SECTION_HEIGHT}px]`);
+    element.classList.replace('p-4','p-2');
+  });
+
+  sidebarElement.querySelectorAll(`div.h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
+    element.classList.replace(`h-[${OLD_HEIGHT}px]`,`h-[${NEW_HEIGHT}px]`);
+  });
+}
+
+function hideZeroBalances(sidebarElement) {
+  getAccountSections(sidebarElement).forEach(function(sectionElement) {
+    getAccounts(sectionElement).forEach(function(accountElement) {
+      if (getAccountValue(accountElement) === 0) {
+        hideElement(accountElement);
+      }
+    });
+  });
+}
+
+function hideAccountChanges(sidebarElement) {
+  // Hide net worth changes
+  let netWorthChangeSymbold = sidebarElement.querySelector('svg')
+  let netWorthChangeContainer = netWorthChangeSymbold.parentElement;
+  let netWorthChangeButtons = netWorthChangeContainer.nextElementSibling;
+  
+  hideElement(netWorthChangeContainer);
+  hideElement(netWorthChangeButtons);
+
+  // Hide change arrows
+  sidebarElement.querySelectorAll('svg[aria-label]:not([aria-label=""])').forEach(function(element) {
+    hideElement(element);
+  });
+
+  getAccountSections(sidebarElement).forEach(function(sectionElement) {
+    // Hide section changes
+    let sectionChangeContainer = sectionElement.previousElementSibling.firstChild;
+    if (sectionChangeContainer.childElementCount > 1) {
+      let valuesContainer = sectionChangeContainer.lastChild;
+      if (valuesContainer.childElementCount > 1) {
+        let sectionChangeElement = valuesContainer.lastChild;
+        hideElement(sectionChangeElement);
       }
     }
+
+    // Hide account changes
+    getAccounts(sectionElement).forEach(function(accountElement) {
+      accountElement.querySelectorAll('[data-testid="performance-change-text"]').forEach(function(element) {
+        hideElement(element);
+      });
+    });
   });
 }
 
-function hideNetWorth() {
+function hideNetWorth(sidebarElement) {
   let netWorthElement, netWorthBlockerElement;
 
-  if (!netWorthHidden) {
-    netWorthElement = document.querySelector('.sidebar__networth-amount');
+  if (!sidebarElement.querySelector('#pcp_networth_blocker')) {
+    netWorthElement = sidebarElement.querySelector('#networth-balance');
     netWorthBlockerElement = netWorthElement.cloneNode()
-    netWorthBlockerElement.className = "sidebar__networth-amount";
-    netWorthBlockerElement.innerText = "$******"
+    netWorthBlockerElement.id = 'pcp_networth_blocker';
+    netWorthBlockerElement.innerText = netWorthElement.innerText.replace(/\d/g, '*')
     netWorthElement.parentNode.insertBefore(netWorthBlockerElement, netWorthElement.nextSibling);
-    netWorthElement.style.display = "none";
+    hideElement(netWorthElement, { temporary: true });
+
     netWorthBlockerElement.onmouseover = function () {
-      netWorthElement.style.display = "block";
-      netWorthBlockerElement.style.display = "none";
+      hideElement(netWorthBlockerElement, { temporary: true });
+      showElement(netWorthElement);
     };
+
     netWorthElement.onmouseout = function () {
-      netWorthElement.style.display = "none";
-      netWorthBlockerElement.style.display = "block";
+      hideElement(netWorthElement, { temporary: true });
+      showElement(netWorthBlockerElement);
     };
-    netWorthHidden = true;
   }
 }
 
+function handleSidebarChange(sidebarElement) {
+  if (OPTIONS.hideNetWorth) {
+    hideNetWorth(sidebarElement);
+  }
+  if (OPTIONS.hideZeroBalances) {
+    hideZeroBalances(sidebarElement);
+  }
+  if (OPTIONS.sortBalances) {
+    sortBalances(sidebarElement);
+  }
+  if (OPTIONS.condenseBalances) {
+    condenseBalances(sidebarElement);
+  }
+  if (OPTIONS.hideAccountChanges) {
+    hideAccountChanges(sidebarElement);
+  }
+}
+
+/*
+When an element matching the provided selector is loaded, add an observer to
+it that runs the provided function every time the element changes. The
+element may not exist even when the page is first loaded.
+
+Waits up to $LOAD_TIMEOUT_MS milliseconds.
+*/
+async function addObserverToElement(selector, fn) {
+  const element = await Promise.race([
+    new Promise(resolve => {
+      const element = document.querySelector(selector);
+      if (element) return resolve(element);
+      const observer = new MutationObserver(() => {
+        const element = document.querySelector(selector);
+        if (element) {
+          observer.disconnect();
+          resolve(element);
+        }
+      });
+      observer.observe(document, OBSERVATIONS);
+    }),
+    new Promise(resolve => setTimeout(() => resolve(null), LOAD_TIMEOUT_MS)),
+  ]);
+  
+  if (element) {
+    const observer = new MutationObserver(() => {
+      observer.disconnect();
+      fn(element);
+      observer.observe(element, OBSERVATIONS);
+    });
+    observer.observe(element, OBSERVATIONS);
+  }
+}
+
+/*
+Primary entry point when the page loads
+*/
 window.addEventListener('load', function() {
-  let observer, target;
-
-  target = document.getElementsByTagName('body')[0];
-  observer = new window.MutationObserver(function(mutations) {
-    observer.disconnect();
-    setupSidebarObserver();
-  });
-  observer.observe(target, OBSERVATIONS);
-
-  addOptionsLink();
+  addObserverToElement('#dropdown-menu-user-profile', addOptionsLink);
+  addObserverToElement('#sidebar-container', handleSidebarChange);
 });

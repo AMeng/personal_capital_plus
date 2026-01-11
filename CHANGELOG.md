@@ -1,5 +1,11 @@
 # Changelog
 
+### Version 4.0
+* Support new Empower Personal Dashboard website
+* New option: Hide account changes
+* Removed option: Hide background graphs. No longer applicable.
+* Removed option: Hide manual entry text. This no longer hides the time.
+
 ### Version 3.2
 * Fix bug in Firefox causing style to apply inconsistently
 

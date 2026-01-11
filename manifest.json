@@ -2,20 +2,20 @@
   "manifest_version": 3,
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
-  "description": "Customize Personal Capital",
-  "version": "3.2",
+  "description": "Customize Empower Personal Dashboard (Formerly known as Personal Capital)",
+  "version": "4.0",
   "options_page": "options.html",
   "content_scripts": [{
-    "matches": ["*://home.personalcapital.com/*"],
+    "matches": ["*://ira.empower-retirement.com/*"],
     "js": ["main.js"],
     "run_at": "document_start"
   }],
   "web_accessible_resources": [{
     "resources": ["options.html"],
-    "matches": ["*://*.personalcapital.com/*"]
+    "matches": ["*://*.empower-retirement.com/*"]
   }],
   "permissions": ["storage", "activeTab", "webNavigation"],
-  "host_permissions": ["*://*.personalcapital.com/*"],
+  "host_permissions": ["*://*.empower-retirement.com/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "@personal-capital-plus"
