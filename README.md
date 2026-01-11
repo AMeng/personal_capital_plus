@@ -22,7 +22,8 @@ Install from the official extension source for your browser:
 After installing, a new menu option will appear under your named settings dropdown called
 "Extension". See screenshot:
 
-![image](https://user-images.githubusercontent.com/192336/53293257-658af500-378e-11e9-919f-55bff3fead34.png)
+<img width="274" height="288" alt="image" src="https://github.com/user-attachments/assets/3b69025f-e7ce-45e5-a9e7-96dc4140f38a" />
+
 
 ## Support
 
