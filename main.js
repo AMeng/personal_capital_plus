@@ -10,12 +10,7 @@ chrome.storage.sync.get("options", function (obj) {
 
 // Get all the sections in the sidebar.
 function getAccountSections(sidebarElement) {
-  return sidebarElement.querySelectorAll('.transition-\\[height\\].ease-in-out');
-}
-
-// Get all the sections in the sidebar.
-function getAccountSectionHeaders(sidebarElement) {
-  
+  return sidebarElement.querySelectorAll('.sc\\:transition-\\[height\\].sc\\:ease-in-out');
 }
 
 // Get all the accounts in a section of the sidebar
@@ -24,7 +19,7 @@ function getAccounts(sectionElement) {
 }
 
 function getAccountValue(accountElement) {
-  const valueText = accountElement.querySelector(".sr-only").textContent;
+  const valueText = accountElement.querySelector(".sc\\:sr-only").textContent;
   return Number(valueText.replace(/[^-0-9\.]+/g, ""));
 }
 
@@ -89,13 +84,13 @@ function condenseBalances(sidebarElement) {
     }
   });
 
-  sidebarElement.querySelectorAll(`span.h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
-    element.classList.replace(`h-[${OLD_HEIGHT}px]`,`h-[${SECTION_HEIGHT}px]`);
-    element.classList.replace('p-4','p-2');
+  sidebarElement.querySelectorAll(`span.sc\\:h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
+    element.classList.replace(`sc:h-[${OLD_HEIGHT}px]`,`sc:h-[${SECTION_HEIGHT}px]`);
+    element.classList.replace('sc:p-4','sc:p-2');
   });
 
-  sidebarElement.querySelectorAll(`div.h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
-    element.classList.replace(`h-[${OLD_HEIGHT}px]`,`h-[${NEW_HEIGHT}px]`);
+  sidebarElement.querySelectorAll(`div.sc\\:h-\\[${OLD_HEIGHT}px\\]`).forEach(function(element) {
+    element.classList.replace(`sc:h-[${OLD_HEIGHT}px]`,`sc:h-[${NEW_HEIGHT}px]`);
   });
 }
 
