@@ -1,5 +1,8 @@
 # Changelog
 
+### Version 4.1
+* Fix features broken by renamed CSS classes.
+
 ### Version 4.0
 * Support new Empower Personal Dashboard website
 * New option: Hide account changes

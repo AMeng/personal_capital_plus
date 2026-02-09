@@ -3,7 +3,7 @@
   "name": "Personal Capital Plus",
   "short_name": "PC Plus",
   "description": "Customize Empower Personal Dashboard (Formerly known as Personal Capital)",
-  "version": "4.0",
+  "version": "4.1",
   "options_page": "options.html",
   "content_scripts": [{
     "matches": ["*://ira.empower-retirement.com/*"],
